@@ -48,7 +48,10 @@ def handler(event, context):
 
     if "text" in message:
         text = message["text"].lower()
-        if text == "/getface":
+        if text == "/start":
+            params["text"] = ("Привет, я умею:\n/getface - отправлять лицо, которое не определено в бд\n/find <name> - "
+                              "отправлять оргинальные фотографии, с данным именем")
+        elif text == "/getface":
             r = pool.retry_operation_sync(select_face_witout_name)
             if len(r[0].rows) == 0:
                 params["text"] = "Нет не определенных имен"
