@@ -20,7 +20,6 @@ provider "yandex"{
 
 resource "yandex_iam_service_account_static_access_key" "sa-static-key" {
   service_account_id = local.service_account_id
-  description        = "static access key"
 }
 
 resource "yandex_storage_bucket" "bucket-photo" {
@@ -42,6 +41,10 @@ resource "yandex_storage_bucket" "bucket-faces" {
 resource "yandex_ydb_database_serverless" "db" {
   name = "${var.user}-db-photo-face"
   location_id = "ru-central1"
+
+   serverless_database {
+    storage_size_limit          = 5
+  }
 }
 
 resource "yandex_ydb_table" "ydb-table" {
